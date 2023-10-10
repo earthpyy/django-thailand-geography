@@ -5,7 +5,6 @@ on:
     branches: [ main ]
     paths:
       - "thailand_geography/**/*"
-      - "tests/**/*"
       - "pyproject.toml"
       - "poetry.lock"
       - ".github/workflows/ci.yml"
@@ -13,7 +12,6 @@ on:
     branches: [ main ]
     paths:
       - "thailand_geography/**/*"
-      - "tests/**/*"
       - "pyproject.toml"
       - "poetry.lock"
       - ".github/workflows/ci.yml"
@@ -38,7 +36,7 @@ jobs:
           pip install pylint~=3.0
       - name: Analyzing the code
         run: |
-          pylint thailand_geography tests
+          pylint thailand_geography
   test:
     needs:
       - lint
@@ -93,7 +91,7 @@ jobs:
         env:
           DJANGO_SETTINGS_MODULE: settings
         run: |
-          poetry run coverage run --source='thailand_geography' tests/manage.py test tests
+          poetry run coverage run --source='thailand_geography' manage.py test
           poetry run coverage report -m
           poetry run coverage xml
       - name: Upload coverage to Codecov

@@ -1,15 +1,19 @@
 default: yapf lint test
 
 lint:
-	poetry run pylint thailand_geography tests
+	poetry run pylint thailand_geography
 
 test:
-	cd tests && poetry run python manage.py test
+	poetry run python manage.py test
 
 coverage:
 	poetry run coverage erase
-	poetry run coverage run --source='thailand_geography' tests/manage.py test tests
+	poetry run coverage run --source='thailand_geography' manage.py test
 	poetry run coverage report -m
 
 yapf:
-	poetry run yapf -ipr thailand_geography tests
+	poetry run yapf -ipr thailand_geography
+
+migrate:
+	poetry run python manage.py makemigrations
+	poetry run python manage.py migrate
