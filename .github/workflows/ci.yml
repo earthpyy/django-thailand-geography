@@ -1,0 +1,103 @@
+name: CI
+
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - "thailand_geography/**/*"
+      - "tests/**/*"
+      - "pyproject.toml"
+      - "poetry.lock"
+      - ".github/workflows/ci.yml"
+  pull_request:
+    branches: [ main ]
+    paths:
+      - "thailand_geography/**/*"
+      - "tests/**/*"
+      - "pyproject.toml"
+      - "poetry.lock"
+      - ".github/workflows/ci.yml"
+  workflow_dispatch:
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: "3.11"
+      - name: Fetch pip cache
+        uses: actions/cache@v2
+        with:
+          path: ~/.cache/pip
+          key: pip
+      - name: Install dependencies
+        run: |
+          pip install pylint~=3.0
+      - name: Analyzing the code
+        run: |
+          pylint thailand_geography tests
+  test:
+    needs:
+      - lint
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python: [ "3.8", "3.9", "3.10", "3.11" ]
+        django: [ "3.2", "4.0", "4.1" ]
+        # ref: https://github.com/jefftriplett/python-github-actions-matrix-demo
+        exclude:
+          # Django 4.0+ requires zoneinfo from Python 3.9+
+          - python: "3.8"
+            django: "4.0"
+          - python: "3.8"
+            django: "4.1"
+        # newest matrix set which will upload to codecov
+        include:
+          - python: "3.11"
+            django: "4.1"
+            codecov: "true"
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ matrix.python }}
+      - name: Fetch pip cache
+        uses: actions/cache@v3
+        with:
+          path: ~/.cache/pip
+          key: pip-${{ matrix.python }}
+      - name: Load cached venv
+        id: cached-poetry-dependencies
+        uses: actions/cache@v3
+        with:
+          path: /home/runner/.cache/pypoetry/virtualenvs
+          key: venv-${{ matrix.python }}-${{ matrix.django }}-${{ hashFiles('**/poetry.lock') }}
+      - name: Install Poetry
+        uses: abatilo/actions-poetry@v2
+        with:
+          poetry-version: "1.4.0"
+      - name: Install dependencies
+        run: |
+          poetry add -n django@~${{ matrix.django }}
+          poetry install -n
+      - name: Verify package versions
+        run: |
+          python -V
+          poetry show django
+      - name: Run tests
+        env:
+          DJANGO_SETTINGS_MODULE: settings
+        run: |
+          poetry run coverage run --source='thailand_geography' tests/manage.py test tests
+          poetry run coverage report -m
+          poetry run coverage xml
+      - name: Upload coverage to Codecov
+        if: matrix.codecov == 'true'
+        uses: codecov/codecov-action@v3
+        with:
+          fail_ci_if_error: true
