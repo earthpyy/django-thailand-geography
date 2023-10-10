@@ -1,9 +1,10 @@
 import factory
 
-from .models import *
+from .models import Province, District, Subdistrict
 
 
 class ProvinceFactory(factory.django.DjangoModelFactory):
+
     class Meta:
         model = Province
 
@@ -13,6 +14,7 @@ class ProvinceFactory(factory.django.DjangoModelFactory):
 
 
 class DistrictFactory(factory.django.DjangoModelFactory):
+
     class Meta:
         model = District
 
@@ -23,6 +25,7 @@ class DistrictFactory(factory.django.DjangoModelFactory):
 
 
 class SubdistrictFactory(factory.django.DjangoModelFactory):
+
     class Meta:
         model = Subdistrict
 
