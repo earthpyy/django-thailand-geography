@@ -3,8 +3,8 @@
 [![GitHub](https://img.shields.io/github/license/earthpyy/django-thailand-geography)](https://github.com/earthpyy/django-thailand-geography/blob/main/LICENSE)
 [![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/earthpyy/django-thailand-geography/ci.yml?branch=main)](https://github.com/earthpyy/django-thailand-geography/actions/workflows/ci.yml)
 [![codecov](https://codecov.io/gh/earthpyy/django-thailand-geography/branch/main/graph/badge.svg?token=PN19DJ3SDF)](https://codecov.io/gh/earthpyy/django-thailand-geography)
-[![PyPI](https://img.shields.io/pypi/v/django-nats-client)](https://pypi.org/project/django-nats-client/)  
-[![PyPI - Python Version](https://img.shields.io/pypi/pyversions/django-nats-client)](https://github.com/earthpyy/django-thailand-geography)
+[![PyPI](https://img.shields.io/pypi/v/django-thailand-geography)](https://pypi.org/project/django-thailand-geography/)  
+[![PyPI - Python Version](https://img.shields.io/pypi/pyversions/django-thailand-geography)](https://github.com/earthpyy/django-thailand-geography)
 
 ## Installation
 
