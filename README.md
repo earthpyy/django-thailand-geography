@@ -6,6 +6,8 @@
 [![PyPI](https://img.shields.io/pypi/v/django-thailand-geography)](https://pypi.org/project/django-thailand-geography/)  
 [![PyPI - Python Version](https://img.shields.io/pypi/pyversions/django-thailand-geography)](https://github.com/earthpyy/django-thailand-geography)
 
+Django models for Thailand geography information. This library also includes a command to import geography data from [thailand-geography-data/thailand-geography-json](https://github.com/thailand-geography-data/thailand-geography-json)
+
 ## Installation
 
 ```bash
@@ -25,6 +27,18 @@ pip install django-thailand-geography
    ]
    ```
 
+1. Run migration
+
+   ```bash
+   python manage.py migrate
+   ```
+
+1. Import data from JSON database
+
+   ```bash
+   python manage.py import_geo
+   ```
+
 ## Development
 
 ### Requirements
@@ -32,6 +46,12 @@ pip install django-thailand-geography
 - Docker
 - Python
 - Poetry
+
+### Migrate
+
+```bash
+make migrate
+```
 
 ### Linting
 
