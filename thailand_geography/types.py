@@ -1,5 +1,6 @@
 from typing import TypedDict
 
+
 class LocationData(TypedDict):
     id: int
     provinceCode: int
