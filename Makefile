@@ -12,7 +12,7 @@ coverage:
 	poetry run coverage report -m
 
 yapf:
-	poetry run yapf -ipr thailand_geography
+	poetry run yapf -ipr thailand_geography --exclude '**/migrations/*.py'
 
 migrate:
 	poetry run python manage.py makemigrations
