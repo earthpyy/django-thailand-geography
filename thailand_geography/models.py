@@ -9,6 +9,9 @@ class Province(models.Model):
     class Meta:
         ordering = ('id',)
 
+    def __str__(self):
+        return str(self.name_th)
+
 
 class District(models.Model):
     id = models.PositiveIntegerField(primary_key=True)
@@ -18,6 +21,9 @@ class District(models.Model):
 
     class Meta:
         ordering = ('id',)
+
+    def __str__(self):
+        return f'{self.province.name_th} / {self.name_th}'
 
 
 class Subdistrict(models.Model):
@@ -31,3 +37,6 @@ class Subdistrict(models.Model):
 
     def get_province(self):
         return self.district.province
+
+    def __str__(self):
+        return f'{self.get_province().name_th} / {self.district.name_th} / {self.name_th}'
